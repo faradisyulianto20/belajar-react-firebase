@@ -4,17 +4,20 @@ import { Fragment } from 'react/jsx-runtime';
 // import Directory from '../../components/directory/directory.component'
 import { Outlet, Link } from 'react-router-dom';
 
+import Button from '../../components/button/button-component'
+
 const Navigation = () => {
 
   return (<>
   <Fragment>
     <div className='navigation'>
-        <Link className='nav-link' to='/'>
-            {/* <CrwnLogo className='logo'/> */}Home
+        <Link to='/'>
+            {/* <CrwnLogo className='logo'/> */}
+            <Button buttonType='green'>Home</Button>
         </Link>
         <div className='nav-links-container'>
-            <Link className='nav-link' to='shop'>Shop</Link>
-            <Link className='nav-link' to='signIn'>Sign In</Link>
+            <Link to='shop'><Button buttonType='green'>Shop</Button></Link>
+            <Link to='auth'><Button buttonType='green'>Sign In</Button></Link>
         </div>
     </div>
     <Outlet />
