@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from '../../utils/firebase/firebase.utils';
 
 import FormInput from '../form-input/form-input.component'
+import Button from '../button/button-component'
 
 const defaultFormFields = {
     displayName: '',
@@ -55,17 +56,16 @@ const SignUpForm = () => {
 
     return (
         <div className='container mx-auto px-4 bg-white dark:bg-gray-800 py-10 shadow-xl rounded-xl space-y-4'>
-            <h1 className='text-2xl font-bold text-center'>Sign up with your email and password</h1>
+            <h1 className='text-2xl font-bold text-center'>I do not have an account</h1>
+            <p  className='text-gray-800 dark:text-gray-400'>Sign up with your email and password</p>
             <form onSubmit={handleSubmit} className='flex flex-col space-y-4'>
                 <FormInput label="Display Name" type='text' required onChange={handleChange} name='displayName' value={displayName} className="input input-bordered w-full"/>
                 <FormInput label="Email" type='email' required onChange={handleChange} name='email' value={email} className="input input-bordered w-full"/>
                 <FormInput label="Password" type='password' required onChange={handleChange} name='password' value={password} className="input input-bordered w-full"/>
                 <FormInput label="Confirm Password" type='password' required onChange={handleChange} name='confirmPassword' value={confirmPassword} className="input input-bordered w-full"/>
-                <button type='submit' className='btn btn-soft btn-accent w-full'>Sign Up</button>
+                <Button type='submit' buttonType='green'  className='w-full'>Sign Up</Button>
             </form>
-            <p className='text-sm text-center text-gray-500 dark:text-gray-300'>
-                Already have an account? <a className='link link-primary' href='#'>Sign in</a>
-            </p>
+            
         </div>
     )
 }
