@@ -5,13 +5,17 @@ import { Fragment, useContext } from 'react';
 import { Outlet, Link } from 'react-router-dom';
 
 import Button from '../../components/button/button-component'
+import CartIcon from '../../components/cart-icon/cart-icon.component';
 
 import { UserContext } from '../../contexts/user.context';
+import { CartContext } from '../../contexts/cart.context';
+
 import { SignOutUser } from '../../utils/firebase/firebase.utils';
 
 const Navigation = () => {
 
   const {currentUser} = useContext(UserContext);
+  const { isCartOpen } = useContext(CartContext);
   console.log(currentUser);
 
   // const SignOutHandler = async () => {
@@ -33,7 +37,10 @@ const Navigation = () => {
             <Link to='shop'><Button buttonType='green'>Shop</Button></Link>
             {
               currentUser ? (
-                <Button buttonType='red' onClick={SignOutUser}>Sign Out</Button>
+                <>
+                  <CartIcon> </CartIcon>
+                  <Button buttonType='red' onClick={SignOutUser}>Sign Out</Button>
+                </>
               ) : 
                 <Link to='auth'><Button buttonType='green'>Sign In</Button></Link>
             }

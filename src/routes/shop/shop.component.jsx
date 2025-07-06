@@ -1,4 +1,5 @@
 import { useContext } from 'react'
+import { CartContext } from '../../contexts/cart.context'
 
 import { ProductsContext } from '../../contexts/products.context'
 
@@ -6,8 +7,12 @@ import Button from '../../components/button/button-component'
 // import SHOP_DATA from '../../shop-data.json'
 // import { useContext } from 'react'
 
-const Shop = () => {
+const Shop = ({product}) => {
     const {products} = useContext(ProductsContext)
+
+    const { addItemToCart } = useContext(CartContext);
+
+    const addProductToCart = () => (addItemToCart(product))
 
     return (
         <>
@@ -19,13 +24,16 @@ const Shop = () => {
                         Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem
                         quasi. In deleniti eaque aut repudiandae et a id nisi.
                     </p>
-                    <Button buttonType='green'>Get Started</Button>
+                    <Button buttonType='green' onClick={() => addItemToCart(product)}>Get Started</Button>
                     </div>
                 </div>
             </div>
             <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 px-4 py-8'>
-                {products.map(({id, imageUrl, name, price}) => (
-                    <div key={id} className="card bg-base-100 w-full shadow-sm dark:bg-white ">
+                {products.map((product) => {
+                    const { id, imageUrl, name, price } = product;
+                        return (
+                            <>
+<div key={id} className="card bg-base-100 w-full shadow-sm dark:bg-gray-800 shadow-sm dark:text-white ">
                         <figure>
                             <img
                             src={imageUrl}
@@ -37,11 +45,13 @@ const Shop = () => {
                             <h2 className="card-title">{name}</h2>
                             <p>{price}$</p>
                             <div className="card-actions justify-end">
-                            <Button buttonType='green'>Buy Now</Button>
+                                <Button buttonType='green' onClick={() => addItemToCart(product)}>Buy Now</Button>
                             </div>
                         </div>
                     </div>
-                ))}
+                            </>
+                    );
+                })}
             </div>
         </>
     )
