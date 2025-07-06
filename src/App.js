@@ -17,7 +17,7 @@ const App = () => {
           console.log('User dari redirect:', result.user);
           await createUserDocumentFromAuth(result.user);
         } else {
-          console.log('Tidak ada hasil redirect');
+          // console.log('Tidak ada hasil redirect');
         }
       } catch (error) {
         console.error('Error saat getRedirectResult:', error);

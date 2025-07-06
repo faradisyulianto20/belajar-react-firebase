@@ -16,12 +16,12 @@ const Authentication = () => {
   useEffect(() => {
     const fetchRedirectResult = async () => {
       const response = await getRedirectResult(auth);
-      console.log(response);
+      // console.log(response);
       if (response) {
         console.log('Redirect result:', response);
         await createUserDocumentFromAuth(response.user);
       } else {
-        console.log('error anying');
+        console.log('No redirect result found');
       }
     };
     fetchRedirectResult();
