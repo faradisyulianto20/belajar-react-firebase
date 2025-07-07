@@ -1,5 +1,5 @@
 const CartItem = ({ cartItem}) => {
-    const {name, quantity, imageUrl} = cartItem;
+    const {name, quantity, imageUrl, price} = cartItem;
     return(
         <>
             <div className="list-row flex gap-3">
