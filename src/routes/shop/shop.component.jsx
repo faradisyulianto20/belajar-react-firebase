@@ -29,29 +29,29 @@ const Shop = ({product}) => {
                 </div>
             </div>
             <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 px-4 py-8'>
-                {products.map((product) => {
-                    const { id, imageUrl, name, price } = product;
+                {products
+                    .find((category) => category.title.toLowerCase() === 'sneakers')  // cari kategori "hats"
+                    ?.items.map((product) => {
+                        const { id, imageUrl, name, price } = product;
                         return (
-                            <>
-<div key={id} className="card bg-base-100 w-full shadow-sm dark:bg-gray-800 shadow-sm dark:text-white ">
-                        <figure>
+                        <div key={id} className="card bg-base-100 w-full shadow-sm dark:bg-gray-800 dark:text-white">
+                            <figure>
                             <img
-                            src={imageUrl}
-                            alt={name} 
-                            className='w-full  h-48 object-cover'
+                                src={imageUrl}
+                                alt={name} 
+                                className='w-full h-48 object-cover'
                             />
-                        </figure>
-                        <div className="card-body">
+                            </figure>
+                            <div className="card-body">
                             <h2 className="card-title">{name}</h2>
                             <p>{price}$</p>
                             <div className="card-actions justify-end">
                                 <Button buttonType='green' onClick={() => addItemToCart(product)}>Buy Now</Button>
                             </div>
+                            </div>
                         </div>
-                    </div>
-                            </>
-                    );
-                })}
+                        );
+                    })}
             </div>
         </>
     )
