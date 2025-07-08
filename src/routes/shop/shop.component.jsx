@@ -1,14 +1,17 @@
-import { useContext } from 'react'
+import { useContext, Fragment } from 'react'
 import { CartContext } from '../../contexts/cart.context'
 
-import { ProductsContext } from '../../contexts/products.context'
+import noImage from '../../assets/image-error.jpg'
+
+import { CategoriesContext } from '../../contexts/categories.context'
 
 import Button from '../../components/button/button-component'
 // import SHOP_DATA from '../../shop-data.json'
 // import { useContext } from 'react'
 
 const Shop = ({product}) => {
-    const {products} = useContext(ProductsContext)
+    const { categoriesMap } = useContext(CategoriesContext)
+    console.log(categoriesMap);
 
     const { addItemToCart } = useContext(CartContext);
 
@@ -28,32 +31,47 @@ const Shop = ({product}) => {
                     </div>
                 </div>
             </div>
-            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 px-4 py-8'>
-                {products
-                    .find((category) => category.title.toLowerCase() === 'sneakers')  // cari kategori "hats"
-                    ?.items.map((product) => {
-                        const { id, imageUrl, name, price } = product;
-                        return (
-                        <div key={id} className="card bg-base-100 w-full shadow-sm dark:bg-gray-800 dark:text-white">
-                            <figure>
-                            <img
-                                src={imageUrl}
-                                alt={name} 
-                                className='w-full h-48 object-cover'
-                            />
-                            </figure>
-                            <div className="card-body">
-                            <h2 className="card-title">{name}</h2>
-                            <p>{price}$</p>
-                            <div className="card-actions justify-end">
-                                <Button buttonType='green' onClick={() => addItemToCart(product)}>Buy Now</Button>
-                            </div>
-                            </div>
-                        </div>
-                        );
-                    })}
-            </div>
+
+            <Fragment >
+                {Object.keys(categoriesMap).map((title) => (
+                        <Fragment key={title}>
+                            <h2 className='dark:text-white text-center text-3xl font-bold uppercase'>{title}</h2>
+                            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 px-4 py-8'>
+                            {categoriesMap[title]
+                                .map((product) => {
+                                    const { id, imageUrl, name, price } = product;
+                                    console.log(product)
+                                    return (
+                                    <div key={id} className="card bg-base-100 w-full shadow-sm dark:bg-gray-800 dark:text-white">
+                                        <figure>
+                                        <img
+                                            src={imageUrl}
+                                            alt={name} 
+                                            className='w-full h-48 object-cover'
+                                            onError={(e) => {
+                                                e.target.onerror = null;
+                                                e.target.src = noImage;
+                                            }}
+                                        />
+                                        </figure>
+                                        <div className="card-body">
+                                        <h2 className="card-title">{name}</h2>
+                                        <p>{price}$</p>
+                                        <div className="card-actions justify-end">
+                                            <Button buttonType='green' onClick={() => addItemToCart(product)}>Buy Now</Button>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    );
+                                })}
+                                </div>
+                        </Fragment>
+                    ))
+                }
+            </Fragment>
+
         </>
+        
     )
 }
 
