@@ -1,78 +1,59 @@
-import { useContext, Fragment } from 'react'
-import { CartContext } from '../../contexts/cart.context'
-
-import noImage from '../../assets/image-error.jpg'
-
-import { CategoriesContext } from '../../contexts/categories.context'
-
+import { useParams } from 'react-router-dom';
+import { useContext } from 'react';
+import { CategoriesContext } from '../../contexts/categories.context';
+import ProductCard from '../../components/product-card/product-card.component';
+import { Link } from 'react-router-dom';
 import Button from '../../components/button/button-component'
-// import SHOP_DATA from '../../shop-data.json'
-// import { useContext } from 'react'
 
-const Shop = ({product}) => {
-    const { categoriesMap } = useContext(CategoriesContext)
-    console.log(categoriesMap);
+const Shop = () => {
+  const { categoryId } = useParams();
+  const { categoriesMap } = useContext(CategoriesContext);
 
-    const { addItemToCart } = useContext(CartContext);
+  if (!categoriesMap || Object.keys(categoriesMap).length === 0) {
+    return <p>Loading categories...</p>;
+  }
 
-    const addProductToCart = () => (addItemToCart(product))
+  // Ambil produk sesuai categoryId
+  const products = categoriesMap[categoryId];
 
-    return (
-        <>
-            <div className="hero bg-base-200 dark:bg-transparent dark:text-white">
-                <div className="hero-content text-center">
-                    <div className="max-w-md">
-                    <h1 className="text-5xl font-bold">This is Shop Page</h1>
-                    <p className="py-6">
-                        Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem
-                        quasi. In deleniti eaque aut repudiandae et a id nisi.
-                    </p>
-                    <Button buttonType='green' onClick={() => addItemToCart(product)}>Get Started</Button>
-                    </div>
-                </div>
-            </div>
+  // Kalau products undefined atau kosong, kita gabungkan semua produk semua kategori
+  const productsToShow = products && products.length > 0
+    ? products
+    : Object.values(categoriesMap).flat();
 
-            <Fragment >
-                {Object.keys(categoriesMap).map((title) => (
-                        <Fragment key={title}>
-                            <h2 className='dark:text-white text-center text-3xl font-bold uppercase'>{title}</h2>
-                            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 px-4 py-8'>
-                            {categoriesMap[title]
-                                .map((product) => {
-                                    const { id, imageUrl, name, price } = product;
-                                    console.log(product)
-                                    return (
-                                    <div key={id} className="card bg-base-100 w-full shadow-sm dark:bg-gray-800 dark:text-white">
-                                        <figure>
-                                        <img
-                                            src={imageUrl}
-                                            alt={name} 
-                                            className='w-full h-48 object-cover'
-                                            onError={(e) => {
-                                                e.target.onerror = null;
-                                                e.target.src = noImage;
-                                            }}
-                                        />
-                                        </figure>
-                                        <div className="card-body">
-                                        <h2 className="card-title">{name}</h2>
-                                        <p>{price}$</p>
-                                        <div className="card-actions justify-end">
-                                            <Button buttonType='green' onClick={() => addItemToCart(product)}>Buy Now</Button>
-                                        </div>
-                                        </div>
-                                    </div>
-                                    );
-                                })}
-                                </div>
-                        </Fragment>
-                    ))
-                }
-            </Fragment>
+  return (
+    <>
+      <div>
+        <h2 className="dark:text-white text-center text-3xl font-bold uppercase">
+          {productsToShow === products ? categoryId : 'All Products'}
+        </h2>
+        <nav className="categories-links flex gap-4 justify-center py-4">
+      {Object.keys(categoriesMap).map((category) => (
+        <Link
+          key={category}
+          to={`/shop/${category}`}
+        >
+        <Button buttonType='green' className='uppercase font-semibold'>
+          {category}
+        </Button>
+        </Link>
+      ))}
+      <Link
+        to="/shop"
+      >
+        <Button buttonType='yellow'>All</Button>
+      </Link>
+    </nav>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 px-4 py-8">
+          {productsToShow.length > 0 ? (
+            productsToShow.map(product => <ProductCard key={product.id} product={product} />)
+          ) : (
+            <p>No products found.</p>
+          )}
+        </div>
+      </div>
+    </>
+  );
+};
 
-        </>
-        
-    )
-}
-
-export default Shop
+export default Shop;
