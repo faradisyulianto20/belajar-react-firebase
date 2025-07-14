@@ -4,13 +4,29 @@ const BUTTON_TYPE_CLASSES = {
   yellow: 'btn-warning',
 };
 
-const Button = ({ children, buttonType = 'green', type = 'button', className = '', ...otherProps }) => {
+const ACTIVE_STYLE_CLASSES = {
+  red: 'bg-secondary text-white border-secondary',
+  green: 'bg-accent text-white border-accent',
+  yellow: 'bg-warning text-white border-warning',
+};
+
+const Button = ({
+  children,
+  buttonType = 'green',
+  type = 'button',
+  isActive = false,
+  className = '',
+  ...otherProps
+}) => {
   const buttonClass = BUTTON_TYPE_CLASSES[buttonType] || '';
+  const activeStyle = isActive
+    ? ACTIVE_STYLE_CLASSES[buttonType] || ''
+    : 'btn-outline';
 
   return (
     <button
       type={type}
-      className={`btn btn-soft ${buttonClass} ${className}`}
+      className={`btn ${buttonClass} ${activeStyle} ${className}`}
       {...otherProps}
     >
       {children}

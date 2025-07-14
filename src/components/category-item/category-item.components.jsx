@@ -23,14 +23,15 @@ const CategoryItem = ({ category, firstImageUrl }) => {
       </figure>
       <div className="card-body flex flex-col justify-between">
         <div className='h-full flex items-center justify-center'>
-            <h2 className="card-title uppercase">{category}</h2>
+            <h2 className="card-title uppercase text-4xl text-slate-300 font-black">{category}</h2>
         </div>
-        <div className="card-actions justify-end">
-          <Link to={`/shop/${category}`}>
-            <Button buttonType="green">Buy Now
-          </Button>
-          </Link>
-        </div>
+        <Link to={`/shop/${category}`}>
+            <div className="card-actions justify-end absolute right-5 bottom-5">
+                <Button buttonType="green">
+                    Buy Now
+                </Button>
+            </div>
+        </Link>
       </div>
     </div>
   );
