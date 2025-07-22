@@ -1,4 +1,4 @@
-import './navigation.styles.scss';
+import './navigation.styles.jsx';
 import { Fragment, useContext } from 'react';
 
 // import Directory from '../../components/directory/directory.component'
