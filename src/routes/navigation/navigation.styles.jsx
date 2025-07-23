@@ -1,27 +1,20 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
-export const Navigation = styled.nav`
+export const NavigationContainer = styled.nav`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin: 1rem;
   font-weight: bold;
 `;
 
 export const NavLinksContainer = styled.div`
   display: flex;
+  align-items: center;
   gap: 1rem;
 `;
 
-export const NavLink = styled.a`
-  text-decoration: none;
-  color: #fff;
-  background-color: #000;
-  padding: 1rem;
-  border-radius: 2rem;
-  transition: all 0.3s ease;
-
-  &:hover {
-    color: #000;
-    background-color: #c7c6c6;
-  }
+export const StyledLink = styled(Link)`
+  border: none;
 `;
