@@ -25,7 +25,6 @@ const Shop = () => {
           {productsToShow === products ? categoryId : 'All Products'}
         </h2>
 
-        {/* KATEGORI LINKS */}
         <nav className="categories-links flex gap-4 justify-center py-4 flex-wrap">
           {Object.keys(categoriesMap).map((category) => (
             <Link key={category} to={`/shop/${category}`}>
@@ -39,7 +38,6 @@ const Shop = () => {
             </Link>
           ))}
 
-          {/* Tombol 'All' */}
           <Link to="/shop">
             <Button
               buttonType="yellow"
@@ -51,7 +49,6 @@ const Shop = () => {
           </Link>
         </nav>
 
-        {/* GRID PRODUK */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 px-4 py-8">
           {productsToShow.length > 0 ? (
             productsToShow.map(product => (
